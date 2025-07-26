@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-deployment
+  labels:
+    type: backend
+    app: myapp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: backend
+      app: myapp
+  template:
+    metadata:
+      name: node-app
+      labels:
+        type: backend
+        app: myapp
+    spec:
+      containers:
+        - name: node-app
+          image: bhavesh9690/node-app
+          env:
+            - name: MONGO_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: db-port
+                  name: mongo-config
+            - name: MONGO_DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: db-name
+                  name: mongo-config
+            - name: MONGO_USER
+              valueFrom:
+                secretKeyRef:
+                  key: username
+                  name: mongo-secret
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: mongo-secret
+            - name: MONGO_HOST
+              value: mongo-service
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+          ports:
+            - containerPort: 3000      
+          
