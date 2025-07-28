@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: node-service
+  name: react-service
 spec:
   selector:
+    type: frontend
     app: myapp
-    type: backend
   ports:
-    - port: 3000
-      targetPort: 3000
+    - port: 80
+      targetPort: 80
   type: ClusterIP

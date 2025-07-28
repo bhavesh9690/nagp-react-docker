@@ -16,7 +16,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('http://35.184.45.189:32000/employees')
+    axios.get('http://bhaveshgoyal.duckdns.org/employees')
       .then(res => {
         setDetails(res.data);
         setLoading(false);
